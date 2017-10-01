@@ -3,6 +3,7 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Blog = require('./models/blog'); // singular!
+var moment = require("moment");
 
 mongoose.connect('mongodb://localhost/restful_blog_app');
 var db = mongoose.connection;
@@ -10,6 +11,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   console.log('restful blog db has connected');
 });
+
+
 
 
 app.set("view engine", "ejs");
@@ -25,7 +28,7 @@ app.get("/blogs", function(req, res){
     if (err) {
       console.log('error');
     } else {
-      res.render('index.ejs', {blogs: blogs});
+      res.render('index.ejs', {blogs: blogs, moment: moment});
     }
   });
 });
