@@ -16,12 +16,6 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true}));
 
-Blog.create({
-  title: "Having cocoa with Emily",
-  image: "https://images.unsplash.com/reserve/F8x8NPwTQEmVdXOHjO8o_Espresso.jpg?dpr=1&auto=compress,format&fit=crop&w=1051&h=&q=80&cs=tinysrgb&crop=",
-  body: "What a fun day to drink hot chocolate with lots of whipped cream!"
-});
-
 app.get("/", function(req, res) {
   res.redirect("/blogs");
 });
@@ -31,9 +25,33 @@ app.get("/blogs", function(req, res){
     if (err) {
       console.log('error');
     } else {
-      res.render('index', {blogs: blogs});
+      res.render('index.ejs', {blogs: blogs});
     }
   });
+});
+
+app.get("/blogs/new", function(req, res) {
+  res.render("new.ejs");
+});
+
+app.post("/blogs", function(req, res) {
+  Blog.create(req.body.blog, function(err, newBlog){
+    if (err) {
+      res.render("new");
+    } else {
+      res.redirect("/blogs");
+    }
+  });
+});
+
+app.get("/blogs/:id", function(req, res) {
+  Blog.findById(req.params.id, function(err, foundBlog) {
+    if (err) {
+      res.redirect('/blogs');
+    } else {
+      res.render("show.ejs", {blog: foundBlog})
+    }
+  }); 
 });
 
 app.listen(5000, function(){

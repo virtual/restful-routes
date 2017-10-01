@@ -1,31 +1,25 @@
 <% include ./partials/header %>
 
-<h1>Blogs!</h1>
-
-<div class="ui items">
-<% blogs.forEach(function(blog){ %>
-  
-  <div class="item">
-      <div class="ui small image">
+  <h1>
+    <%=blog.title%>
+  </h1>
+  <div class="ui segment items">
+    <div class="item">
+      <div class="ui centered rounded image">
         <img src="<%=blog.image%>">
       </div>
       <div class="content">
-        <div class="header"><%=blog.title%></div>
+        <div class="header"></div>
         <div class="meta">
           <span class="price"><%= blog.created %></span>
         </div>
         <div class="description">
-          <p><%= blog.body %></p>
+          <p>
+            <%= blog.body %>
+          </p>
           <a class="ui button basic brown" href="/blogs/<%= blog.id %>">Read more</a>
         </div>
       </div>
     </div>
-<% }); %>
-</div>
-
-
-    
-
-
-
-<% include ./partials/footer %>
+  </div>
+  <% include ./partials/footer %>
