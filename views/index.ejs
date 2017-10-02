@@ -1,31 +1,29 @@
 <% include ./partials/header %>
 
-<h1>Blogs!</h1>
+  <h1>Blogs!</h1>
 
-<div class="ui items">
-<% blogs.forEach(function(blog){ %>
-  
-  <div class="item">
-      <div class="ui small image">
-        <img src="<%=blog.image%>">
-      </div>
-      <div class="content">
-        <div class="header"><%=blog.title%></div>
-        <div class="meta">
-          <span class="price"><%= moment(blog.created).startOf('hour').fromNow(); %></span>
+  <div class="ui items">
+    <% blogs.forEach(function(blog){ %>
+
+      <div class="item">
+        <div class="ui small image">
+          <img src="<%=blog.image%>">
         </div>
-        <div class="description">
-          <p><%= blog.body.substring(0, 100) %>...</p>
-          <a class="ui button basic brown" href="/blogs/<%= blog.id %>">Read more</a>
+        <div class="content">
+          <div class="header">
+            <%=blog.title%>
+          </div>
+          <div class="meta">
+            <span class="price"><%= moment(blog.created).startOf('hour').fromNow(); %></span>
+          </div>
+          <div class="description">
+            <p>
+              <%= blog.body.substring(0, 100) %>...</p>
+            <a class="ui button basic brown" href="/blogs/<%= blog.id %>">Read more</a>
+          </div>
         </div>
       </div>
-    </div>
-<% }); %>
-</div>
-
-
-    
-
-
-
-<% include ./partials/footer %>
+      <% }); %>
+  </div>
+ 
+  <% include ./partials/footer %>

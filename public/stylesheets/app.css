@@ -1,7 +1,8 @@
-i.icon {
+.menu i.icon {
   font-size: 2em;
 }
 
 footer.ui.inverted.vertical.footer.segment { margin-top:2em;}
 
 img {height:auto}
+.editlink { margin-left: 1em; border-left: 1px solid #ccc; padding-left:1em;}

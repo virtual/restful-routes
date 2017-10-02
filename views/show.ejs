@@ -10,15 +10,15 @@
           <img src="<%=blog.image%>">
         </div>
         <div class="content">
-          <div class="header"></div>
-          <div class="meta">
-            <span class="price"><%= blog.created %></span>
+            <div class="meta">
+                <span class="createdAt">Post created <%= moment(blog.created).startOf('hour').fromNow(); %></span>
+                <span class="editlink"><a href="/blogs/<%= blog._id %>/edit">
+                  <i class="edit icon"></i>Edit</a></span>
           </div>
           <div class="description">
             <p>
               <%= blog.body %>
             </p>
-            <a class="ui button basic brown" href="/blogs/<%= blog.id %>">Read more</a>
           </div>
         </div>
       </div>

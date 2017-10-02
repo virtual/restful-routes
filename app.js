@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Blog = require('./models/blog'); // singular!
 var moment = require("moment");
+var methodOverride = require("method-override");
 
 mongoose.connect('mongodb://localhost/restful_blog_app');
 var db = mongoose.connection;
@@ -18,11 +19,13 @@ db.once('open', function () {
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true}));
+app.use(methodOverride("_method"));
 
 app.get("/", function(req, res) {
   res.redirect("/blogs");
 });
 
+// INDEX - list all blogs
 app.get("/blogs", function(req, res){
   Blog.find({}, function(err, blogs){
     if (err) {
@@ -33,10 +36,12 @@ app.get("/blogs", function(req, res){
   });
 });
 
+// NEW - Show new blog form
 app.get("/blogs/new", function(req, res) {
   res.render("new.ejs");
 });
 
+// CREATE - Create a new post then redirect
 app.post("/blogs", function(req, res) {
   Blog.create(req.body.blog, function(err, newBlog){
     if (err) {
@@ -47,14 +52,37 @@ app.post("/blogs", function(req, res) {
   });
 });
 
+// SHOW - Show info about one specific blog
 app.get("/blogs/:id", function(req, res) {
   Blog.findById(req.params.id, function(err, foundBlog) {
     if (err) {
       res.redirect('/blogs');
     } else {
-      res.render("show.ejs", {blog: foundBlog})
+      res.render("show.ejs", {blog: foundBlog, moment: moment})
     }
   }); 
+});
+
+// EDIT - Show edit form for one blog
+app.get("/blogs/:id/edit", function(req, res) {
+  Blog.findById(req.params.id, function(err, foundBlog) {
+    if (err) {
+      res.redirect('/blogs/:id');
+    } else {
+      res.render("edit.ejs", {blog: foundBlog})
+    }
+  }); 
+});
+
+// UPDATE - update route
+app.put("/blogs/:id", function(req, res) {
+  Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog) {
+    if (err) {
+      res.redirect('/blogs');
+    } else {
+      res.redirect("/blogs/"+ req.params.id);
+    }
+  });
 });
 
 app.listen(5000, function(){
