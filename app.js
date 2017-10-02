@@ -24,6 +24,14 @@ app.use(methodOverride("_method"));
 app.get("/", function(req, res) {
   res.redirect("/blogs");
 });
+let allBlogs;
+Blog.find({}, function(err, blogs){
+  if (err) {
+    console.log('error');
+  } else {
+    allBlogs = blogs;
+  }
+});
 
 // INDEX - list all blogs
 app.get("/blogs", function(req, res){
@@ -31,14 +39,14 @@ app.get("/blogs", function(req, res){
     if (err) {
       console.log('error');
     } else {
-      res.render('index.ejs', {blogs: blogs, moment: moment});
+      res.render('index.ejs', {blogs: allBlogs, moment: moment});
     }
   });
 });
 
 // NEW - Show new blog form
 app.get("/blogs/new", function(req, res) {
-  res.render("new.ejs");
+  res.render("new.ejs", {blogs: allBlogs});
 });
 
 // CREATE - Create a new post then redirect
@@ -58,7 +66,7 @@ app.get("/blogs/:id", function(req, res) {
     if (err) {
       res.redirect('/blogs');
     } else {
-      res.render("show.ejs", {blog: foundBlog, moment: moment})
+      res.render("show.ejs", {blogs: allBlogs, blog: foundBlog, moment: moment})
     }
   }); 
 });
@@ -69,7 +77,7 @@ app.get("/blogs/:id/edit", function(req, res) {
     if (err) {
       res.redirect('/blogs/:id');
     } else {
-      res.render("edit.ejs", {blog: foundBlog})
+      res.render("edit.ejs", {blogs: allBlogs, blog: foundBlog})
     }
   }); 
 });
@@ -95,6 +103,7 @@ app.delete("/blogs/:id", function(req, res) {
     }
   });
 });
+
 
 app.listen(5000, function(){
   console.log("listening on port 5000");
