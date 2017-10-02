@@ -17,5 +17,8 @@
       </div>
       <input class="ui brown basic button" type="submit">
     </form>
+    <form class="ui form delete" action="/blogs/<%=blog._id%>?_method=delete" method="post">
+      <input class="ui red  button" type="submit" value="Delete">
+    </form>
   </div>
   <% include ./partials/footer %>

@@ -8,6 +8,5 @@ var BlogSchema = new mongoose.Schema({
   created: { type: Date, default: Date.now }
 });
 
-
 // export it! Good to make singular
 module.exports = mongoose.model('Blog', BlogSchema);

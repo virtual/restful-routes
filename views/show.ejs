@@ -1,27 +1,27 @@
 <% include ./partials/header %>
 
-  <h1>
-    <%=blog.title%>
-  </h1>
+ 
   <div class="ui main text segment">
     <div class="ui top attached">
-      <div class="item">
-        <div class="ui centered rounded image">
-          <img src="<%=blog.image%>">
-        </div>
-        <div class="content">
-            <div class="meta">
-                <span class="createdAt">Post created <%= moment(blog.created).startOf('hour').fromNow(); %></span>
+     
+        <div class="ui text ">
+            <h1 class="ui header"><%=blog.title%> 
+              <div class="sub header"><span class="createdAt">Post created <%= moment(blog.created).startOf('hour').fromNow(); %></span></div></h1>
+              <div class="item">
+                  <div>
+                     <img class="ui centered rounded image large" src="<%=blog.image%>">
+                   </div> 
+                 </div>
+            <p> <%= blog.body %></p>
+             <h4 class="ui horizontal header divider">
+                
+                
                 <span class="editlink"><a href="/blogs/<%= blog._id %>/edit">
                   <i class="edit icon"></i>Edit</a></span>
+            </h4>
+             
           </div>
-          <div class="description">
-            <p>
-              <%= blog.body %>
-            </p>
-          </div>
-        </div>
-      </div>
+ 
     </div>
   </div>
   <% include ./partials/footer %>

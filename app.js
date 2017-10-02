@@ -74,13 +74,24 @@ app.get("/blogs/:id/edit", function(req, res) {
   }); 
 });
 
-// UPDATE - update route
+// UPDATE - Update a particular post then redirect somewhere
 app.put("/blogs/:id", function(req, res) {
   Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog) {
     if (err) {
       res.redirect('/blogs');
     } else {
       res.redirect("/blogs/"+ req.params.id);
+    }
+  });
+});
+
+// DELETE - Remove a particular post then redirect somewhere
+app.delete("/blogs/:id", function(req, res) {
+  Blog.findByIdAndRemove(req.params.id, req.body.blog, function(err, deletedBlog) {
+    if (err) {
+      res.redirect("/blogs/"+ req.params.id);
+    } else {
+      res.redirect("/blogs");
     }
   });
 });
