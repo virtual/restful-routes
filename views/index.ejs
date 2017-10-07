@@ -7,19 +7,19 @@
 
       <div class="item">
         <div class="ui small image">
-          <img src="<%=blog.image%>">
+          <a href="/blogs/<%= blog.id %>"><img src="<%=blog.image%>"></a>
         </div>
         <div class="content">
           <div class="header">
-            <%=blog.title%>
+            <a href="/blogs/<%= blog.id %>"><%=blog.title%></a>
           </div>
           <div class="meta">
             <span class="price"><%= moment(blog.created).startOf('hour').fromNow(); %></span>
           </div>
           <div class="description">
             <p>
-              <%= blog.body.substring(0, 100) %>...</p>
-            <a class="ui button basic brown" href="/blogs/<%= blog.id %>">Read more</a>
+              <%- blog.body.substring(0, 93) %>...</p>
+            <a class="ui button basic brown" href="/blogs/<%= blog.id %>">Read more <i class="right chevron icon"></i></a>
           </div>
         </div>
       </div>
